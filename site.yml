@@ -1,0 +1,5 @@
+---
+- hosts: nginx_hosts
+  roles:
+    - {role: "centos7-nginx"}
+        
