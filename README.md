@@ -51,7 +51,7 @@ For RHEL / CentOS:
 
 ## To pass host ip or hostname from command line at run time use below coommand
 
-ansible-playbook -i <hostname/ip>, site.yml -e "host=<hostname/ip>"
+      ansible-playbook -i <hostname/ip>, site.yml -e "host=<hostname/ip>"
 
 ## License
 
