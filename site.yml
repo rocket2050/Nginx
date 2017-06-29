@@ -1,5 +1,5 @@
 ---
-- hosts: nginx_hosts
+- hosts: "{{ host }}"
   roles:
-    - {role: "centos7-nginx"}
+    - {role: "nginx"}
         

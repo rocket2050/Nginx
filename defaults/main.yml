@@ -7,4 +7,4 @@ nginx_access_log: /var/log/nginx/access.log
 nginx_pid: /var/run/nginx.pid
 nginx_worker_connections: 1024
 nginx_client_max_body_size: 8m
-
+host: localhost
