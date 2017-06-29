@@ -49,7 +49,7 @@ For RHEL / CentOS:
           nginx_worker_connections: 1024
           nginx_client_max_body_size: 8m
 
-## To pass host ip or hostname from command line at run time use below coommand
+## To pass host ip or hostname from command line at run time use below command
 
       ansible-playbook -i <hostname/ip>, site.yml -e "host=<hostname/ip>"
 
