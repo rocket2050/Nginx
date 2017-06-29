@@ -7,7 +7,7 @@
   copy: src=nginx_signing.key dest=/tmp/nginx_signing.key
 
 - name: Clean packages
-  command: yum clean all
+  command: yum clean all warn=no
 
 - name: install updates
   yum: name='*' update_cache=yes state=latest
