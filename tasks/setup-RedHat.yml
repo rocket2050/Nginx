@@ -11,13 +11,13 @@
 
 - name: install Centos EPEL repo on the server
   yum: pkg=epel-release state=installed
+
+- name: install nginx on server
+  yum: pkg=nginx state=installed
   
 - name: force restart of Daemon
   service: name=daemon state=restarted
   tags: daemon_reload
-
-- name: install nginx on server
-  yum: pkg=nginx state=installed
 
 - name: start nginx service
   service: name=nginx state=started enabled=yes
