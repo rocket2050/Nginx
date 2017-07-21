@@ -1,0 +1,27 @@
+---
+
+
+- name: remove default nginx virtual host config file
+  file:
+    path: "{{ nginx_default_vhost_path }}"
+    state: absent
+  when: nginx_remove_default_vhost
+  notify: restart nginx
+
+- name: Ensure Nginx Virtual Host path exists
+  file:
+    path: "{{ nginx_vhost_path }}"
+    state: directory
+  notify: reload nginx
+
+- name: Add pre-defined virtual host config file
+  template: 
+    src: "{{ item.template | default(nginx_vhost_template) }} "
+    dest: "{{ nginx_vhost_path }}/{{ item.filename|default(item.server_name.split('')[0] ~ '.conf) }}"
+    force: yes
+    owner: root
+    group: "{{ root_group }} "
+    mode: 0775
+  when: item.state|default('present') != 'absent'
+  with_items: "{{ nginx_vhosts }}"
+  notify: reload nginx

@@ -1,0 +1,21 @@
+---
+
+#- name: Enable nginx repo.
+#  template:
+#    src: nginx.repo.j2
+#    dest: /etc/yum.repos.d/nginx.repo
+#    owner: root
+#    group: root
+#    mode: 0755
+#  when: nginx_yum_repo_enabled
+
+- name: install Centos EPEL repo on the server
+  yum: pkg=epel-release state=installed
+  
+
+- name: install nginx on server
+  yum: pkg=nginx state=installed
+
+- name: start nginx service
+  service: name=nginx state=started enabled=yes
+
