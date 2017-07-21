@@ -15,9 +15,9 @@
 - name: install nginx on server
   yum: pkg=nginx state=installed
   
-- name: force restart of Daemon
-  systemd: name=daemon state=reloaded
-  tags: daemon_reload
+- systemd:
+    state: restarted
+    daemon_reload: yes
 
 - name: start nginx service
   service: name=nginx state=started enabled=yes
