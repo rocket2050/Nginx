@@ -1,23 +1,33 @@
 ---
-# tasks file for ansible-centos7-nginx
-- name: Add Nginx YUM repository
-  copy: src=nginx.repo dest=/etc/yum.repos.d/nginx.repo
+#tasks for nginx setup
 
-- name: Copy nginx_signing key
-  copy: src=nginx_signing.key dest=/tmp/nginx_signing.key
 
-- name: Clean packages
-  command: yum clean all warn=no
+# Include variables on the basis of Operating System
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags: include_variables
 
-- name: install updates
-  yum: name='*' update_cache=yes state=latest
+# Define Nginx User
+- name: Define nginx_user.
+  set_fact:
+    nginx_user: "{{ __nginx_user }}"
+  when: nginx_user is not defined
+  tags: nginx_user
 
-- name: Install latest nginx
-  yum: name=nginx state=latest
+# Running Task for Debian Platform   
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+  tags: task_debian
 
-- name: Copy template nginx, then restart
-  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf backup=yes
-  notify: reload nginx
+# Running Task for Redhat Platform
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+  tags: task_redhat
 
-- name: Ensure service is started and that it always starts on boot
-  service: name=nginx state=restarted enabled=yes
+# Include Virtual Host Configuration
+- include: virt_host.yml
+  tags: virtual_host_configuration
+
+# Include Configuration File
+- include: configuration.yml
+  tags: conf_file_setup

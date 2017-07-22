@@ -1,5 +1,5 @@
 ---
-- hosts: "{{ host }}"
-  roles:
-    - {role: "nginx"}
-        
+- hosts: {{ hosts }}
+
+  roles: 
+    - role: Nginx
